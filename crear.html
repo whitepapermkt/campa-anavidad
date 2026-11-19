@@ -104,6 +104,7 @@
   }
   .btn:active { transform: scale(.98); }
   .btn-red { background: var(--red); color: #fff; grid-column: 1 / -1; }
+  .btn[disabled] { opacity: .45; pointer-events: none; }
   .btn-red:hover { background: #ff4d50; }
   .btn-chalk { background: var(--chalk); color: var(--ink); }
   .btn-chalk:hover { background: #fff; }
@@ -138,6 +139,10 @@
       <div class="field">
         <label for="de">De</label>
         <input id="de" maxlength="40" placeholder="Carlos" />
+      </div>
+      <div class="field">
+        <label for="correo">Correo de quien recibe <span class="opt">Para enviarle el sobre</span></label>
+        <input id="correo" class="small" type="email" inputmode="email" autocomplete="off" placeholder="ana@empresa.com" />
       </div>
       <div class="field">
         <label for="msg">Mensaje <span class="opt">Opcional</span></label>
@@ -177,7 +182,8 @@
         <button class="btn btn-red" id="gen" type="button" style="width:100%;margin-bottom:14px">Crear enlace corto</button>
         <code class="linkbox" id="link"></code>
         <div class="actions" id="actions">
-          <a class="btn btn-red" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+          <button class="btn btn-red" id="mail" type="button" style="grid-column:1 / -1">Enviar correo con el sobre</button>
+          <a class="btn btn-chalk" id="wa" href="#" target="_blank" rel="noopener" style="grid-column:1 / -1">Enviar por WhatsApp</a>
           <button class="btn btn-chalk" id="copyLink" type="button">Copiar enlace</button>
           <button class="btn btn-ghost" id="copyMsg" type="button">Copiar mensaje</button>
           <a class="btn btn-ghost" id="open" href="#" target="_blank" rel="noopener" style="grid-column:1 / -1">Ver cómo se abre</a>
@@ -257,7 +263,7 @@
         if (!res.ok) throw new Error(res.j.error || "No se pudo crear el enlace.");
         try { localStorage.setItem("wp_clave_equipo", clave); } catch (e) {}
         shortUrl = res.j.url; shortKey = last.key;
-        build(); toast("Enlace corto listo");
+        build(); estadoMail(); toast("Enlace corto listo");
       })
       .catch(function (e) {
         // si el servicio no responde, se puede usar el enlace largo
@@ -287,11 +293,32 @@
   }
 
   ["para", "de", "msg", "activar"].forEach(function (id) { $(id).addEventListener("input", build); });
+  function correoValido() { return /^[^\s@<>"]+@[^\s@<>"]+\.[a-z]{2,}$/i.test($("correo").value.trim()); }
+  function estadoMail() { $("mail").disabled = !(shortUrl && shortKey === last.key && correoValido()); }
+  function enviar() {
+    var clave = $("clave").value.trim();
+    if (!clave) { toast("Escribe la clave del equipo."); return; }
+    var correo = $("correo").value.trim();
+    $("mail").disabled = true; $("mail").textContent = "Enviando…";
+    fetch("/api/enviar", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clave: clave, correo: correo, url: shortUrl, p: last.para, d: last.de })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j.error || "No se pudo enviar.");
+        toast("Correo enviado a " + correo);
+      })
+      .catch(function (e) { toast(e.message); })
+      .then(function () { $("mail").textContent = "Enviar correo con el sobre"; estadoMail(); });
+  }
+  $("mail").addEventListener("click", enviar);
+  ["para", "de", "msg", "activar", "correo"].forEach(function (id) { $(id).addEventListener("input", estadoMail); });
   $("gen").addEventListener("click", generar);
   $("copyLink").addEventListener("click", function () { copy(build().url, "Enlace copiado"); });
   $("copyMsg").addEventListener("click", function () { copy(build().text, "Mensaje copiado"); });
   $("f").addEventListener("submit", function (e) { e.preventDefault(); });
   build();
+  estadoMail();
 })();
 </script>
 </body>

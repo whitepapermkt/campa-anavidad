@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<title>Hero del correo de regalo</title>
+<!-- Fuente para generar email/regalo-hero.jpg (600×640 px, exportado al doble: 1200×1280). No se usa en el correo directamente. -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@500;600&display=swap" rel="stylesheet" />
+<style>
+  :root { --red: #FF383C; --chalk: #f4f1ea; --ink: #141414; --cream: #f3ecdf; --pine: #1b231f;
+    --grain-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  html, body { margin: 0; background: var(--pine); }
+  .hero { position: relative; width: 600px; height: 640px; overflow: hidden; color: var(--chalk);
+    background: radial-gradient(90% 60% at 50% 48%, #26322c 0%, var(--pine) 70%, var(--pine) 100%); }
+  .hero::after { content: ""; position: absolute; inset: 0; opacity: .06; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  .top { position: absolute; left: 28px; right: 28px; top: 22px; padding-bottom: 16px; border-bottom: 1px solid rgba(244,241,234,.16);
+    display: flex; justify-content: center; align-items: center; }
+  .top .wm { width: 190px; filter: brightness(0) invert(1) sepia(.15); }
+  .top span { font: 500 11.5px/1 "Inter", sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(244,241,234,.55); }
+  .eyebrow { position: absolute; left: 0; right: 0; top: 100px; text-align: center; font: 600 16px/1 "Inter", sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--red); }
+  h1 { position: absolute; left: 0; right: 0; top: 130px; margin: 0; text-align: center; font: 400 64px/1 "Instrument Serif", serif; letter-spacing: -.015em; }
+  h1 em { font-style: italic; }
+  .env { position: absolute; left: 70px; top: 300px; width: 460px; height: 297px; border-radius: 3px;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,.55)); }
+  .env .b { position: absolute; inset: 0; border-radius: 3px; background-color: var(--cream); background-image: var(--grain-soft), radial-gradient(140% 120% at 50% 40%, transparent 60%, rgba(120,100,70,.10) 100%); }
+  .env .folds { position: absolute; inset: 0;
+    background:
+      linear-gradient(to top right, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) left bottom / 50% 100% no-repeat,
+      linear-gradient(to top left, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) right bottom / 50% 100% no-repeat; }
+  .env .flap { position: absolute; left: 0; right: 0; top: 0; height: 60%; clip-path: polygon(0 0, 100% 0, 50% 100%);
+    background-color: var(--cream); background-image: var(--grain-soft), linear-gradient(180deg, transparent 70%, rgba(80,60,30,.10)); }
+  .env .fs { position: absolute; left: 0; right: 0; top: 0; height: 61.5%; clip-path: polygon(0 0, 100% 0, 50% 100%); background: rgba(0,0,0,.07); filter: blur(2px); }
+  .env .seal { position: absolute; left: 50%; top: 60%; width: 72px; height: 72px; margin: -36px 0 0 -36px; filter: drop-shadow(0 3px 3px rgba(0,0,0,.30)); }
+  .env .seal svg { width: 100%; height: 100%; display: block; }
+  .env .seal .wm { position: absolute; left: 50%; top: 50%; width: 34px; margin: -15px 0 0 -17px; }
+  .env .seal .wm.dk { filter: brightness(.45) saturate(1.2); opacity: .75; mix-blend-mode: multiply; }
+  .env .seal .wm.hl { filter: brightness(0) invert(1); opacity: .28; transform: translate(-1px,-1.5px); }
+  .env .to { position: absolute; left: 32px; bottom: 26px; color: rgba(20,20,20,.62); font-family: "Inter", sans-serif; }
+  .env .to small { display: block; font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+  .env .to span { display: block; margin-top: 3px; font: italic 400 24px/1 "Instrument Serif", serif; color: var(--ink); }
+  .env .stamp { position: absolute; right: 28px; bottom: 28px; text-align: right; font: 600 9.5px/1.4 "Inter", sans-serif; letter-spacing: .18em; color: rgba(20,20,20,.5); text-transform: uppercase; }
+  .spark { position: absolute; width: 90px; filter: brightness(0) invert(1) sepia(.25); }
+  .hint { position: absolute; left: 0; right: 0; top: 640px; text-align: center; font: 500 11px/1 "Inter", sans-serif; letter-spacing: .2em; text-transform: uppercase; color: rgba(244,241,234,.75); }
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="top"><img class="wm" src="../../assets/regalo/logo-whitepaper-alpha.png" alt=""></div>
+  <div class="eyebrow">Tienes un regalo</div>
+  <h1>Tu regalo de<br><em>Whitepaper.</em></h1>
+  <img class="spark" src="../../assets/regalo/destellos-rojo.png" style="left:478px;top:212px;transform:rotate(-8deg)">
+  <img class="spark" src="../../assets/regalo/destellos-rojo.png" style="left:14px;top:262px;width:70px;transform:rotate(170deg)">
+  <div class="env">
+    <div class="b"></div><div class="folds"></div><div class="fs"></div><div class="flap"></div>
+    <div class="stamp">Suscripción anual<br>Whitepaper</div>
+    <div class="seal">
+      <svg viewBox="0 0 100 100"><defs><radialGradient id="wax" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff6265"/><stop offset=".55" stop-color="#FF383C"/><stop offset="1" stop-color="#b81f24"/></radialGradient></defs>
+        <path fill="url(#wax)" d="M50 4c6 0 9 4 14 5s10-1 14 3 2 9 5 13 8 7 8 13-4 8-4 13 4 9 2 14-8 6-10 10-2 10-7 12-9-1-14 1-8 6-14 6-8-4-13-6-11 1-15-3-2-9-5-13-9-7-9-13 5-8 5-13-4-9-1-13 9-4 12-8 3-10 8-12 9 1 14-1 6-9 11-9z"/>
+        <circle cx="50" cy="50" r="31" fill="none" stroke="#a51a1f" stroke-opacity=".5" stroke-width="2"/></svg>
+      <img class="wm hl" src="../../assets/regalo/w-whitepaper.png"><img class="wm dk" src="../../assets/regalo/w-whitepaper.png">
+    </div>
+  </div>
+</div>
+<script>window.render = function () {};</script>
+</body>
+</html>
