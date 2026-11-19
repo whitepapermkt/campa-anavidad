@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Crea tu tarjeta · Whitepaper</title>
+<meta name="robots" content="noindex" />
+<meta name="theme-color" content="#1b231f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Spectral:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #faf9f7; --ink: #141414; --red: #FF383C; --pine: #1b231f; --pine-2: #232d28;
+    --cream: #f3ecdf; --graphite: #6b6762; --chalk: #f4f1ea;
+    --serif: "Instrument Serif", Georgia, serif;
+    --body: "Spectral", Georgia, serif;
+    --ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --grain-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; color: var(--chalk); font-family: var(--body);
+    background: radial-gradient(120% 70% at 50% 30%, #26322c 0%, var(--pine) 60%, #141a17 100%) fixed;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: max(18px, env(safe-area-inset-top)) 16px 56px; }
+  @media (min-width: 720px) { .wrap { padding-left: 40px; padding-right: 40px; } }
+  .topbar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 14px; border-bottom: 1px solid rgba(244,241,234,.16); }
+  .wordmark { font: 500 .78rem/1 var(--ui); letter-spacing: .32em; color: var(--chalk); text-decoration: none; }
+  .edition { display: none; font: 400 .7rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase; color: rgba(244,241,234,.55); }
+
+  @media (min-width: 640px) { .edition { display: block; } }
+  .head { text-align: center; margin: clamp(36px, 7vh, 72px) auto 40px; max-width: 640px; }
+  .eyebrow { font: 600 .75rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--red); margin: 0 0 14px; }
+  h1 { font: 400 clamp(2.5rem, 6vw + .5rem, 4.5rem)/.98 var(--serif); letter-spacing: -.015em; margin: 0; }
+  h1 em { font-style: italic; }
+  .head .eyebrow { color: var(--red); margin: 0 0 14px; font-size: .75rem; line-height: 1; }
+  .head p:not(.eyebrow) { margin: 16px auto 0; font-size: 1.08rem; line-height: 1.55; color: rgba(244,241,234,.75); max-width: 46ch; }
+
+  .grid { display: grid; gap: 40px; align-items: start; }
+  @media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr; gap: 56px; } }
+
+  /* Formulario */
+  form { background: var(--paper); color: var(--ink); border-radius: 3px; padding: clamp(22px, 4vw, 36px); box-shadow: 0 30px 60px -30px rgba(0,0,0,.7); }
+  .field { margin-bottom: 22px; }
+  label { display: flex; justify-content: space-between; font: 600 .72rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: var(--graphite); margin-bottom: 8px; }
+  label .opt { font-weight: 500; letter-spacing: .04em; text-transform: none; }
+  input, textarea {
+    width: 100%; border: 0; border-bottom: 1px solid rgba(20,20,20,.25); background: transparent; border-radius: 0;
+    padding: 8px 0 10px; font: 400 1.35rem/1.3 var(--serif); color: var(--ink); outline: none;
+  }
+  textarea { font: italic 400 1.25rem/1.4 var(--serif); resize: vertical; min-height: 96px; }
+  input:focus, textarea:focus { border-bottom: 2px solid var(--red); padding-bottom: 9px; }
+  input::placeholder, textarea::placeholder { color: #a9a49d; }
+  input.small { font: 400 .95rem/1.3 var(--ui); }
+  .count { font: 500 .72rem/1 var(--ui); color: var(--graphite); text-align: right; margin-top: 6px; }
+  .count.over { color: var(--red); }
+  .hint { font: 400 .8rem/1.45 var(--ui); color: var(--graphite); margin: 6px 0 0; }
+
+  /* Vista previa */
+  .preview { position: sticky; top: 24px; }
+  .preview .label { font: 600 .72rem/1 var(--ui); letter-spacing: .14em; text-transform: uppercase; color: rgba(244,241,234,.55); margin: 0 0 14px; text-align: center; }
+  .env {
+    position: relative; width: 100%; max-width: 480px; margin: 0 auto; aspect-ratio: 1.55; border-radius: 3px;
+    background-color: var(--cream); background-image: var(--grain-soft);
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,.7); overflow: hidden;
+  }
+  .env::before { /* solapa cerrada */
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 60%;
+    background: linear-gradient(180deg, rgba(0,0,0,.02), rgba(80,60,30,.09));
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+  }
+  .env::after { /* pliegues */
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(to top right, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) left bottom / 50% 100% no-repeat,
+      linear-gradient(to top left, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) right bottom / 50% 100% no-repeat;
+  }
+  .env .seal { position: absolute; z-index: 2; left: 50%; top: 60%; width: 15%; aspect-ratio: 1; transform: translate(-50%,-50%); filter: drop-shadow(0 3px 3px rgba(0,0,0,.28)); }
+  .env .to { position: absolute; z-index: 2; left: 7%; bottom: 9%; color: rgba(20,20,20,.62); font-family: var(--ui); max-width: 55%; }
+  .env .to small { display: block; font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; }
+  .env .to span { display: block; font: italic 400 clamp(1.1rem, 3.6vw, 1.5rem)/1.1 var(--serif); color: var(--ink); margin-top: 2px; overflow-wrap: anywhere; }
+  .env .stamp { position: absolute; z-index: 2; right: 6%; bottom: 9%; font: 600 .58rem/1.3 var(--ui); letter-spacing: .18em; color: rgba(20,20,20,.5); text-align: right; text-transform: uppercase; }
+  .note {
+    max-width: 440px; margin: -14px auto 0; position: relative; z-index: 3; transform: rotate(-.8deg);
+    background-color: var(--cream); background-image: var(--grain-soft); color: var(--ink);
+    padding: 20px 22px 18px; border-radius: 2px; box-shadow: 0 20px 40px -24px rgba(0,0,0,.7);
+  }
+  .note .msg { font: italic 400 1.2rem/1.35 var(--serif); margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
+  .note .from { text-align: right; margin: 12px 0 0; font: italic 1rem/1 var(--body); }
+
+  /* Resultado */
+  .result { margin-top: 30px; }
+  .linkbox {
+    display: block; width: 100%; background: rgba(0,0,0,.25); border: 1px solid rgba(244,241,234,.18); border-radius: 3px;
+    padding: 12px 14px; font: 400 .82rem/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--chalk); word-break: break-all; margin-bottom: 14px;
+  }
+  .actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 50px; padding: 0 16px;
+    border-radius: 3px; border: 0; cursor: pointer; text-decoration: none;
+    font: 600 .76rem/1 var(--ui); letter-spacing: .1em; text-transform: uppercase; transition: background-color .2s, transform .15s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-red { background: var(--red); color: #fff; grid-column: 1 / -1; }
+  .btn-red:hover { background: #ff4d50; }
+  .btn-chalk { background: var(--chalk); color: var(--ink); }
+  .btn-chalk:hover { background: #fff; }
+  .btn-ghost { background: transparent; color: var(--chalk); border: 1px solid rgba(244,241,234,.3); }
+  .btn-ghost:hover { border-color: var(--chalk); }
+  .toast { text-align: center; font: 500 .8rem/1 var(--ui); color: var(--chalk); margin-top: 14px; min-height: 1em; opacity: 0; transition: opacity .25s; }
+  .toast.on { opacity: 1; }
+  .disabled { opacity: .45; pointer-events: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <a class="wordmark" href="./">WHITEPAPER</a>
+    <span class="edition">Regala Whitepaper · Navidad 2026</span>
+  </div>
+
+  <div class="head">
+    <p class="eyebrow">Crea tu tarjeta</p>
+    <h1>Un regalo, <em>con su nombre.</em></h1>
+    <p>Escribe para quién es, de parte de quién y un mensaje. Te damos el enlace listo para enviar por correo o WhatsApp.</p>
+  </div>
+
+  <div class="grid">
+    <form id="f" autocomplete="off" novalidate>
+      <div class="field">
+        <label for="para">Para</label>
+        <input id="para" maxlength="40" placeholder="Ana Paula" />
+      </div>
+      <div class="field">
+        <label for="de">De</label>
+        <input id="de" maxlength="40" placeholder="Carlos" />
+      </div>
+      <div class="field">
+        <label for="msg">Mensaje <span class="opt">Opcional</span></label>
+        <textarea id="msg" maxlength="280" placeholder="Por un año de nuevas historias, perspectivas y aprendizajes."></textarea>
+        <div class="count" id="count">0 / 280</div>
+      </div>
+      <div class="field" style="margin-bottom:0">
+        <label for="activar">Enlace de activación <span class="opt">Opcional</span></label>
+        <input id="activar" class="small" inputmode="url" placeholder="https://www.whitepaper.mx/…" />
+        <p class="hint" id="actHint">El enlace del correo de regalo de Substack. Si lo pegas, el botón "Activar mi membresía" lleva directo ahí.</p>
+      </div>
+    </form>
+
+    <div class="preview">
+      <p class="label">Así lo verá</p>
+      <div class="env" aria-hidden="true">
+        <svg class="seal" viewBox="0 0 100 100">
+          <defs><radialGradient id="wax" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff5a5d"/><stop offset=".55" stop-color="#FF383C"/><stop offset="1" stop-color="#b81f24"/></radialGradient></defs>
+          <path fill="url(#wax)" d="M50 4c6 0 9 4 14 5s10-1 14 3 2 9 5 13 8 7 8 13-4 8-4 13 4 9 2 14-8 6-10 10-2 10-7 12-9-1-14 1-8 6-14 6-8-4-13-6-11 1-15-3-2-9-5-13-9-7-9-13 5-8 5-13-4-9-1-13 9-4 12-8 3-10 8-12 9 1 14-1 6-9 11-9z"/>
+          <circle cx="50" cy="50" r="30" fill="none" stroke="#a51a1f" stroke-opacity=".55" stroke-width="2"/>
+          <path d="M33 41 L41 60 L50 45 L59 60 L67 40" fill="none" stroke="#ff8f91" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+        </svg>
+        <div class="to"><small>Para</small><span id="pvPara">ti</span></div>
+        <div class="stamp">Membresía anual<br />Whitepaper</div>
+      </div>
+      <div class="note">
+        <p class="msg" id="pvMsg">Por un año de nuevas historias, perspectivas y aprendizajes.</p>
+        <p class="from" id="pvDe">Con cariño</p>
+      </div>
+
+      <div class="result">
+        <code class="linkbox" id="link"></code>
+        <div class="actions" id="actions">
+          <a class="btn btn-red" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+          <button class="btn btn-chalk" id="copyLink" type="button">Copiar enlace</button>
+          <button class="btn btn-ghost" id="copyMsg" type="button">Copiar mensaje</button>
+          <a class="btn btn-ghost" id="open" href="#" target="_blank" rel="noopener" style="grid-column:1 / -1">Ver cómo se abre</a>
+        </div>
+        <p class="toast" id="toast" role="status"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var base = location.origin && location.origin !== "null"
+    ? location.origin + location.pathname.replace(/crear(\.html)?$/, "")
+    : "./";
+  var DEFAULT_MSG = "Por un año de nuevas historias, perspectivas y aprendizajes.";
+
+  function clean(v) { return v.replace(/[\u0000-\u001f<>]/g, " ").replace(/[ \t]+/g, " ").trim(); }
+  function validAct(v) {
+    try { var u = new URL(v); return u.protocol === "https:" && /(^|\.)(whitepaper\.mx|substack\.com)$/.test(u.hostname); }
+    catch (e) { return false; }
+  }
+
+  function build() {
+    var para = clean($("para").value), de = clean($("de").value);
+    var msg = $("msg").value.replace(/[<>]/g, "").trim(), act = $("activar").value.trim();
+
+    $("pvPara").textContent = para || "ti";
+    $("pvMsg").textContent = msg || DEFAULT_MSG;
+    $("pvDe").textContent = de || "Con cariño";
+    $("count").textContent = $("msg").value.length + " / 280";
+
+    var actOk = !act || validAct(act);
+    $("actHint").textContent = actOk
+      ? "El enlace del correo de regalo de Substack. Si lo pegas, el botón \"Activar mi membresía\" lleva directo ahí."
+      : "Ese enlace no es de whitepaper.mx ni de substack.com, así que no se incluirá.";
+    $("actHint").style.color = actOk ? "" : "var(--red)";
+
+    var q = new URLSearchParams();
+    if (para) q.set("para", para);
+    if (de) q.set("de", de);
+    if (msg) q.set("msg", msg);
+    if (act && actOk) q.set("activar", act);
+    q.set("utm_source", "tarjeta");
+    q.set("utm_medium", "link");
+    q.set("utm_campaign", "regala_whitepaper_2026");
+    var url = base + "?" + q.toString().replace(/\+/g, "%20");
+
+    $("link").textContent = url;
+    $("open").href = url;
+    var text = buildText(para, de, url);
+    $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
+    $("actions").classList.toggle("disabled", !para);
+    return { url: url, text: text };
+  }
+
+  function buildText(para, de, url) {
+    return (para ? para + ", " : "") + "tienes un regalo" + (de ? " de " + de : "") +
+      ": un año de Whitepaper. Ábrelo aquí:\n" + url;
+  }
+
+  var t;
+  function toast(m) { $("toast").textContent = m; $("toast").classList.add("on"); clearTimeout(t); t = setTimeout(function () { $("toast").classList.remove("on"); }, 1800); }
+  function copy(text, ok) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { toast(ok); }, function () { fallback(text, ok); });
+    } else fallback(text, ok);
+  }
+  function fallback(text, ok) {
+    var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); toast(ok); } catch (e) { toast("No se pudo copiar. Selecciona el enlace y cópialo."); }
+    document.body.removeChild(ta);
+  }
+
+  ["para", "de", "msg", "activar"].forEach(function (id) { $(id).addEventListener("input", build); });
+  $("copyLink").addEventListener("click", function () { copy(build().url, "Enlace copiado"); });
+  $("copyMsg").addEventListener("click", function () { copy(build().text, "Mensaje copiado"); });
+  $("f").addEventListener("submit", function (e) { e.preventDefault(); });
+  build();
+})();
+</script>
+</body>
+</html>

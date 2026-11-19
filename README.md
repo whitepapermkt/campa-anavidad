@@ -2,6 +2,10 @@
 
 Landing para quien recibe una membresía anual de Whitepaper como regalo: un sobre que se abre y revela la gift card, lo que incluye la membresía y cómo activarla.
 
+## Crear tarjetas
+
+En `/crear` el equipo escribe para quién es, de quién y el mensaje, y obtiene el enlace listo para copiar o enviar por WhatsApp.
+
 ## Personalizar el enlace
 
 ```
