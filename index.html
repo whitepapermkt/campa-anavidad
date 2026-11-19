@@ -270,25 +270,26 @@
   .stage.flap-back .env-flap { z-index: 1; }
   /* Salida de la tarjeta: un solo movimiento en arco.
      El sobre cae mientras la tarjeta sube, así queda libre del bolsillo antes de pasar al frente. */
-  .stage.is-pulling .card { animation: pull 1.5s both; }
+  .stage.is-pulling .card { animation: pull 2.4s both; }
   @keyframes pull {
-    0%   { transform: translateY(0) rotate(0) rotateX(0) scale(1); z-index: 2; animation-timing-function: cubic-bezier(.35,0,.15,1); }
-    40%  { transform: translateY(-84%) rotate(-3deg) rotateX(10deg) scale(1.02); z-index: 2; animation-timing-function: linear; }
-    41%  { transform: translateY(-84%) rotate(-3deg) rotateX(10deg) scale(1.02); z-index: 6; animation-timing-function: cubic-bezier(.3,0,.2,1); }
-    84%  { transform: translateY(1.2%) rotate(.6deg) rotateX(-2deg) scale(1.1); z-index: 6; animation-timing-function: cubic-bezier(.4,0,.3,1); }
+    0%   { transform: translateY(0) rotate(0) rotateX(0) scale(1); z-index: 2; animation-timing-function: cubic-bezier(.45,0,.25,1); }
+    42%  { transform: translateY(-82%) rotate(-2.5deg) rotateX(8deg) scale(1.02); z-index: 2; animation-timing-function: ease-in-out; }
+    49%  { transform: translateY(-86%) rotate(-3deg) rotateX(9deg) scale(1.03); z-index: 2; animation-timing-function: linear; }
+    50%  { transform: translateY(-86%) rotate(-3deg) rotateX(9deg) scale(1.03); z-index: 6; animation-timing-function: cubic-bezier(.35,0,.2,1); }
+    88%  { transform: translateY(1.2%) rotate(.5deg) rotateX(-2deg) scale(1.1); z-index: 6; animation-timing-function: cubic-bezier(.4,0,.3,1); }
     100% { transform: translateY(0) rotate(0) rotateX(0) scale(1.09); z-index: 6; }
   }
-  .stage.is-pulling .card { box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6); transition: box-shadow 1s var(--ease-paper) .6s; }
-  .stage.is-pulling .env-back, .stage.is-pulling .env-front { animation: drop 1s cubic-bezier(.45,0,.8,.4) .15s both; }
-  .stage.is-pulling .env-flap { animation: dropFlap 1s cubic-bezier(.45,0,.8,.4) .15s both; }
+  .stage.is-pulling .card { box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6); transition: box-shadow 1s var(--ease-paper) 1.2s; }
+  .stage.is-pulling .env-back, .stage.is-pulling .env-front { animation: drop 1.3s cubic-bezier(.45,0,.8,.4) .5s both; }
+  .stage.is-pulling .env-flap { animation: dropFlap 1.3s cubic-bezier(.45,0,.8,.4) .5s both; }
   @keyframes drop {
     0%   { transform: translateY(0) rotate(0); opacity: 1; }
-    45%  { transform: translateY(20%) rotate(1deg); opacity: 1; }
+    54%  { transform: translateY(20%) rotate(1deg); opacity: 1; }
     100% { transform: translateY(75%) rotate(3deg); opacity: 0; }
   }
   @keyframes dropFlap {
     0%   { transform: perspective(1400px) translateY(0) rotateX(-180deg); opacity: 1; }
-    45%  { transform: perspective(1400px) translateY(20%) rotateX(-180deg); opacity: 1; }
+    54%  { transform: perspective(1400px) translateY(20%) rotateX(-180deg); opacity: 1; }
     100% { transform: perspective(1400px) translateY(75%) rotateX(-180deg); opacity: 0; }
   }
   .stage.is-pulling .envelope { pointer-events: none; }
@@ -743,10 +744,8 @@
   });
 
   /* ---- Secuencia de apertura ---- */
-  var KEY = "wp_regalo_abierto";
   var opened = false, timers = [];
   function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
-  function store() { try { sessionStorage.setItem(KEY, "1"); } catch (e) {} }
 
   function reveal(focus) {
     body.classList.add("revealed");
@@ -762,25 +761,23 @@
 
   function open() {
     if (opened) { finish(); return; } // segundo toque adelanta al final
-    opened = true; store();
+    opened = true;
     track("envelope_open");
     if (reduce) { stage.style.transition = "opacity .3s"; finish(); return; }
     if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} }
     stage.classList.add("is-opening");
     at(560, function () { stage.classList.add("flap-back"); });
-    at(600, function () { stage.classList.add("is-pulling"); });           // tarjeta sale en arco, sobre cae
-    at(1650, function () { stage.classList.add("ink"); });                 // la frase se entinta al llegar
-    at(1850, function () { stage.classList.add("sparkle"); });             // destellos cuando asienta
-    at(2300, function () { reveal(false); });
-    at(3400, function () { stage.classList.add("is-done"); stage.classList.remove("is-opening","flap-back","is-pulling","ink","sparkle"); });
+    at(650, function () { stage.classList.add("is-pulling"); });           // la tarjeta sale del sobre (2.4 s)
+    at(2350, function () { stage.classList.add("ink"); });                 // la frase se entinta al llegar al frente
+    at(2750, function () { stage.classList.add("sparkle"); });             // destellos cuando asienta
+    at(3150, function () { reveal(false); });                              // después, todo lo demás
+    at(4300, function () { stage.classList.add("is-done"); stage.classList.remove("is-opening","flap-back","is-pulling","ink","sparkle"); });
   }
 
   env.addEventListener("click", open);
   stage.addEventListener("click", function (e) { if (opened && e.target !== env) finish(); });
-  $("skip").addEventListener("click", function () { if (!opened) { opened = true; store(); track("envelope_skip"); } finish(); });
+  $("skip").addEventListener("click", function () { if (!opened) { opened = true; track("envelope_skip"); } finish(); });
 
-  // Si ya lo abrió en esta sesión, no repetir la animación
-  try { if (sessionStorage.getItem(KEY)) { opened = true; stage.className = "stage is-done"; reveal(false); } } catch (e) {}
 
   /* ---- Entradas al hacer scroll ---- */
   var io;
