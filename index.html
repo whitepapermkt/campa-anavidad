@@ -775,7 +775,8 @@
   }
 
   env.addEventListener("click", open);
-  stage.addEventListener("click", function (e) { if (opened && e.target !== env) finish(); });
+  // Un toque fuera del sobre durante la animación la adelanta. Los toques dentro del sobre los maneja open().
+  stage.addEventListener("click", function (e) { if (opened && !env.contains(e.target)) finish(); });
   $("skip").addEventListener("click", function () { if (!opened) { opened = true; track("envelope_skip"); } finish(); });
 
 
