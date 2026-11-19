@@ -699,7 +699,6 @@
   var msg = clean(q.get("msg"), 280);
 
   if (para) {
-    $("eyebrow").textContent = "Un regalo para " + para;
     $("envTo").textContent = para;
     $("noteTo").textContent = "Para " + para;
     env.setAttribute("aria-label", "Abrir tu regalo" + (de ? " de " + de : ""));
