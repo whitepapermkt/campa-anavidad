@@ -2,6 +2,13 @@
 
 Landing para quien recibe una suscripción anual de Whitepaper como regalo: un sobre que se abre y revela la gift card, lo que incluye la suscripción y cómo activarla.
 
+## Links cortos
+
+`/crear` genera links tipo `campa-anavidad.vercel.app/x7k2mn`. Cómo funciona:
+- `api/crear.js` guarda los datos en Upstash Redis (conectado desde Vercel → Storage) y devuelve un código de 6 caracteres. Pide la clave del equipo (`CLAVE_EQUIPO`, en Vercel → Settings → Environment Variables).
+- `api/r.js` + el rewrite de `vercel.json` hacen que `/:codigo` abra la landing con esos datos.
+- Los links largos (`?p=…&d=…`) siguen funcionando.
+
 ## Crear tarjetas
 
 En `/crear` el equipo escribe para quién es, de quién y el mensaje, y obtiene el enlace listo para copiar o enviar por WhatsApp.

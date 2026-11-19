@@ -112,6 +112,8 @@
   .toast { text-align: center; font: 500 .8rem/1 var(--ui); color: var(--chalk); margin-top: 14px; min-height: 1em; opacity: 0; transition: opacity .25s; }
   .toast.on { opacity: 1; }
   .disabled { opacity: .45; pointer-events: none; }
+  .linkbox.stale { opacity: .45; }
+  #gen[disabled] { opacity: .6; cursor: wait; }
 </style>
 </head>
 <body>
@@ -147,6 +149,11 @@
         <input id="activar" class="small" inputmode="url" placeholder="https://www.whitepaper.mx/…" />
         <p class="hint" id="actHint">El enlace del correo de regalo de Substack. Si lo pegas, el botón "Activar mi suscripción" lleva directo ahí.</p>
       </div>
+      <div class="field" style="margin:22px 0 0">
+        <label for="clave">Clave del equipo</label>
+        <input id="clave" class="small" type="password" autocomplete="current-password" placeholder="Solo la primera vez" />
+        <p class="hint">Se guarda en este navegador para no pedirla cada vez.</p>
+      </div>
     </form>
 
     <div class="preview">
@@ -167,6 +174,7 @@
       </div>
 
       <div class="result">
+        <button class="btn btn-red" id="gen" type="button" style="width:100%;margin-bottom:14px">Crear enlace corto</button>
         <code class="linkbox" id="link"></code>
         <div class="actions" id="actions">
           <a class="btn btn-red" id="wa" href="#" target="_blank" rel="noopener">Enviar por WhatsApp</a>
@@ -216,14 +224,47 @@
     if (de) q.set("d", de);
     if (msg) q.set("m", msg);
     if (act && actOk) q.set("a", act);
-    var url = base + (q.toString() ? "?" + q.toString() : "");
+    var longUrl = base + (q.toString() ? "?" + q.toString() : "");
+    var key = q.toString();
+    // si los datos cambiaron desde el último enlace corto, hay que volver a generarlo
+    var url = (shortUrl && key === shortKey) ? shortUrl : longUrl;
+    var stale = !!shortUrl && key !== shortKey;
 
-    $("link").textContent = url;
+    $("link").textContent = stale ? "Cambiaste los datos: vuelve a crear el enlace corto." : (shortUrl && !stale ? url : "Llena los datos y da clic en «Crear enlace corto».");
+    $("link").classList.toggle("stale", !shortUrl || stale);
     $("open").href = url;
     var text = buildText(para, de, url);
     $("wa").href = "https://wa.me/?text=" + encodeURIComponent(text);
-    $("actions").classList.toggle("disabled", !para);
+    $("actions").classList.toggle("disabled", !para || !shortUrl || stale);
+    $("gen").disabled = !para;
+    last = { para: para, de: de, msg: msg, act: (act && actOk) ? act : "", key: key, longUrl: longUrl };
     return { url: url, text: text };
+  }
+
+  var shortUrl = "", shortKey = "", last = {};
+  try { $("clave").value = localStorage.getItem("wp_clave_equipo") || ""; } catch (e) {}
+
+  function generar() {
+    var clave = $("clave").value.trim();
+    if (!clave) { toast("Escribe la clave del equipo."); $("clave").focus(); return; }
+    build();
+    $("gen").disabled = true; $("gen").textContent = "Creando…";
+    fetch("/api/crear", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ clave: clave, p: last.para, d: last.de, m: last.msg, a: last.act })
+    }).then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok) throw new Error(res.j.error || "No se pudo crear el enlace.");
+        try { localStorage.setItem("wp_clave_equipo", clave); } catch (e) {}
+        shortUrl = res.j.url; shortKey = last.key;
+        build(); toast("Enlace corto listo");
+      })
+      .catch(function (e) {
+        // si el servicio no responde, se puede usar el enlace largo
+        shortUrl = last.longUrl; shortKey = last.key; build();
+        toast(e.message + " Usa el enlace largo.");
+      })
+      .then(function () { $("gen").textContent = "Crear enlace corto"; $("gen").disabled = !last.para; });
   }
 
   function buildText(para, de, url) {
@@ -232,7 +273,7 @@
   }
 
   var t;
-  function toast(m) { $("toast").textContent = m; $("toast").classList.add("on"); clearTimeout(t); t = setTimeout(function () { $("toast").classList.remove("on"); }, 1800); }
+  function toast(m) { $("toast").textContent = m; $("toast").classList.add("on"); clearTimeout(t); t = setTimeout(function () { $("toast").classList.remove("on"); }, m.length > 30 ? 5000 : 1800); }
   function copy(text, ok) {
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(text).then(function () { toast(ok); }, function () { fallback(text, ok); });
@@ -246,6 +287,7 @@
   }
 
   ["para", "de", "msg", "activar"].forEach(function (id) { $(id).addEventListener("input", build); });
+  $("gen").addEventListener("click", generar);
   $("copyLink").addEventListener("click", function () { copy(build().url, "Enlace copiado"); });
   $("copyMsg").addEventListener("click", function () { copy(build().text, "Mensaje copiado"); });
   $("f").addEventListener("submit", function (e) { e.preventDefault(); });
