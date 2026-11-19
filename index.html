@@ -268,18 +268,32 @@
   .stage.is-opening .seal .shine { display: none; }
   .stage.is-opening .env-flap { transform: perspective(1400px) rotateX(-180deg); }
   .stage.flap-back .env-flap { z-index: 1; }
-  .stage.is-lifting .card { transform: translateY(-62%) rotateX(3deg); }
-  .stage.is-out .card {
-    z-index: 6;
-    transform: translateY(0) scale(1.09);
-    transition: transform .7s var(--ease-paper), box-shadow .6s;
-    box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6);
+  /* Salida de la tarjeta: un solo movimiento en arco.
+     El sobre cae mientras la tarjeta sube, así queda libre del bolsillo antes de pasar al frente. */
+  .stage.is-pulling .card { animation: pull 1.5s both; }
+  @keyframes pull {
+    0%   { transform: translateY(0) rotate(0) rotateX(0) scale(1); z-index: 2; animation-timing-function: cubic-bezier(.35,0,.15,1); }
+    40%  { transform: translateY(-84%) rotate(-3deg) rotateX(10deg) scale(1.02); z-index: 2; animation-timing-function: linear; }
+    41%  { transform: translateY(-84%) rotate(-3deg) rotateX(10deg) scale(1.02); z-index: 6; animation-timing-function: cubic-bezier(.3,0,.2,1); }
+    84%  { transform: translateY(1.2%) rotate(.6deg) rotateX(-2deg) scale(1.1); z-index: 6; animation-timing-function: cubic-bezier(.4,0,.3,1); }
+    100% { transform: translateY(0) rotate(0) rotateX(0) scale(1.09); z-index: 6; }
   }
-  .stage.is-out .env-back, .stage.is-out .env-front { transform: translateY(40%); opacity: 0; }
-  .stage.is-out .env-flap { transform: perspective(1400px) translateY(40%) rotateX(-180deg); opacity: 0; transition: transform .6s var(--ease-paper), opacity .6s var(--ease-paper); }
-  .stage.is-out .envelope { pointer-events: none; }
-  .stage.is-out .env-shadow { opacity: 0; }
-  .stage.is-out ~ .hint { opacity: 0; }
+  .stage.is-pulling .card { box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6); transition: box-shadow 1s var(--ease-paper) .6s; }
+  .stage.is-pulling .env-back, .stage.is-pulling .env-front { animation: drop 1s cubic-bezier(.45,0,.8,.4) .15s both; }
+  .stage.is-pulling .env-flap { animation: dropFlap 1s cubic-bezier(.45,0,.8,.4) .15s both; }
+  @keyframes drop {
+    0%   { transform: translateY(0) rotate(0); opacity: 1; }
+    45%  { transform: translateY(20%) rotate(1deg); opacity: 1; }
+    100% { transform: translateY(75%) rotate(3deg); opacity: 0; }
+  }
+  @keyframes dropFlap {
+    0%   { transform: perspective(1400px) translateY(0) rotateX(-180deg); opacity: 1; }
+    45%  { transform: perspective(1400px) translateY(20%) rotateX(-180deg); opacity: 1; }
+    100% { transform: perspective(1400px) translateY(75%) rotateX(-180deg); opacity: 0; }
+  }
+  .stage.is-pulling .envelope { pointer-events: none; }
+  .stage.is-pulling .env-shadow { opacity: 0; transition-duration: .9s; }
+  .stage.is-pulling ~ .hint { opacity: 0; }
   .stage.sparkle .sparkles .s1 { animation: sparkle 1.6s var(--ease-paper) forwards; }
   .stage.sparkle .sparkles .s2 { animation: sparkle2 1.6s var(--ease-paper) .15s forwards; }
   @keyframes sparkle { 0% { opacity: 0; transform: scale(.6); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 1; transform: scale(1); } }
@@ -754,11 +768,11 @@
     if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} }
     stage.classList.add("is-opening");
     at(560, function () { stage.classList.add("flap-back"); });
-    at(760, function () { stage.classList.add("is-lifting"); });
-    at(1520, function () { stage.classList.add("is-out"); });
-    at(1700, function () { stage.classList.add("sparkle", "ink"); });
-    at(2350, function () { reveal(false); });
-    at(3000, function () { stage.classList.add("is-done"); stage.classList.remove("is-opening","flap-back","is-lifting","is-out"); });
+    at(600, function () { stage.classList.add("is-pulling"); });           // tarjeta sale en arco, sobre cae
+    at(1650, function () { stage.classList.add("ink"); });                 // la frase se entinta al llegar
+    at(1850, function () { stage.classList.add("sparkle"); });             // destellos cuando asienta
+    at(2300, function () { reveal(false); });
+    at(3400, function () { stage.classList.add("is-done"); stage.classList.remove("is-opening","flap-back","is-pulling","ink","sparkle"); });
   }
 
   env.addEventListener("click", open);
