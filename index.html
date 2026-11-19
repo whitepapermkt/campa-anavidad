@@ -694,9 +694,11 @@
     v = String(v).replace(/[\u0000-\u001f<>]/g, " ").replace(/\s+/g, " ").trim();
     return v.slice(0, max);
   }
-  var para = clean(q.get("para"), 40);
-  var de = clean(q.get("de"), 40);
-  var msg = clean(q.get("msg"), 280);
+  // Claves cortas (p, d, m, a, g) y largas (para, de, msg, activar, gift_id) para enlaces anteriores
+  function get(k, long) { return q.get(k) || q.get(long); }
+  var para = clean(get("p", "para"), 40);
+  var de = clean(get("d", "de"), 40);
+  var msg = clean(get("m", "msg"), 280);
 
   if (para) {
     $("envTo").textContent = para;
@@ -712,7 +714,7 @@
   if (msg) $("noteMsg").textContent = msg;
 
   // Enlace de activación: solo dominios de Whitepaper o Substack
-  var act = q.get("activar");
+  var act = get("a", "activar");
   if (act) {
     try {
       var u = new URL(act);
@@ -727,7 +729,7 @@
   gift.searchParams.set("utm_source", "gift_landing");
   gift.searchParams.set("utm_medium", "referral");
   gift.searchParams.set("utm_campaign", "regala_whitepaper_2026");
-  if (q.get("gift_id")) gift.searchParams.set("ref", clean(q.get("gift_id"), 64));
+  if (get("g", "gift_id")) gift.searchParams.set("ref", clean(get("g", "gift_id"), 64));
   $("giftLink").href = gift.href;
 
   /* ---- Analítica (GTM / GA4 si existe) ---- */

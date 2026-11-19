@@ -211,14 +211,12 @@
     $("actHint").style.color = actOk ? "" : "var(--red)";
 
     var q = new URLSearchParams();
-    if (para) q.set("para", para);
-    if (de) q.set("de", de);
-    if (msg) q.set("msg", msg);
-    if (act && actOk) q.set("activar", act);
-    q.set("utm_source", "tarjeta");
-    q.set("utm_medium", "link");
-    q.set("utm_campaign", "regala_whitepaper_2026");
-    var url = base + "?" + q.toString().replace(/\+/g, "%20");
+    // Claves de una letra para que el enlace sea corto; "+" es un espacio
+    if (para) q.set("p", para);
+    if (de) q.set("d", de);
+    if (msg) q.set("m", msg);
+    if (act && actOk) q.set("a", act);
+    var url = base + (q.toString() ? "?" + q.toString() : "");
 
     $("link").textContent = url;
     $("open").href = url;

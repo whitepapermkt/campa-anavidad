@@ -9,15 +9,17 @@ En `/crear` el equipo escribe para quién es, de quién y el mensaje, y obtiene 
 ## Personalizar el enlace
 
 ```
-https://<dominio>/?para=Ana%20Paula&de=Carlos&msg=Tu%20mensaje&activar=<enlace de Substack>&gift_id=123
+https://<dominio>/?p=Ana+Paula&d=Carlos&m=Tu+mensaje&a=<enlace de Substack>&g=123
 ```
 
 | Parámetro | Uso | Límite |
 |---|---|---|
-| `para` | Nombre de quien recibe | 40 caracteres |
-| `de` | Nombre de quien regala | 40 caracteres |
-| `msg` | Mensaje personal | 280 caracteres |
-| `activar` | Enlace de activación (solo https de whitepaper.mx o substack.com) | — |
-| `gift_id` | Se pasa como `ref` al botón de regalar | 64 caracteres |
+| `p` | Nombre de quien recibe | 40 caracteres |
+| `d` | Nombre de quien regala | 40 caracteres |
+| `m` | Mensaje personal | 280 caracteres |
+| `a` | Enlace de activación (solo https de whitepaper.mx o substack.com) | — |
+| `g` | Se pasa como `ref` al botón de regalar | 64 caracteres |
+
+Los nombres largos (`para`, `de`, `msg`, `activar`, `gift_id`) también funcionan.
 
 Sitio estático, sin build. Cada push a `main` se publica en Vercel.
