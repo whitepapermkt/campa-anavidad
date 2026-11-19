@@ -145,7 +145,7 @@
       <div class="field" style="margin-bottom:0">
         <label for="activar">Enlace de activación <span class="opt">Opcional</span></label>
         <input id="activar" class="small" inputmode="url" placeholder="https://www.whitepaper.mx/…" />
-        <p class="hint" id="actHint">El enlace del correo de regalo de Substack. Si lo pegas, el botón "Activar mi membresía" lleva directo ahí.</p>
+        <p class="hint" id="actHint">El enlace del correo de regalo de Substack. Si lo pegas, el botón "Activar mi suscripción" lleva directo ahí.</p>
       </div>
     </form>
 
@@ -156,10 +156,10 @@
           <defs><radialGradient id="wax" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="#ff5a5d"/><stop offset=".55" stop-color="#FF383C"/><stop offset="1" stop-color="#b81f24"/></radialGradient></defs>
           <path fill="url(#wax)" d="M50 4c6 0 9 4 14 5s10-1 14 3 2 9 5 13 8 7 8 13-4 8-4 13 4 9 2 14-8 6-10 10-2 10-7 12-9-1-14 1-8 6-14 6-8-4-13-6-11 1-15-3-2-9-5-13-9-7-9-13 5-8 5-13-4-9-1-13 9-4 12-8 3-10 8-12 9 1 14-1 6-9 11-9z"/>
           <circle cx="50" cy="50" r="30" fill="none" stroke="#a51a1f" stroke-opacity=".55" stroke-width="2"/>
-          <path d="M33 41 L41 60 L50 45 L59 60 L67 40" fill="none" stroke="#ff8f91" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+          <defs><filter id="wDk" color-interpolation-filters="sRGB"><feColorMatrix values=".45 0 0 0 0  0 .45 0 0 0  0 0 .45 0 0  0 0 0 1 0"/></filter><filter id="wHl" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/></filter></defs><image href="assets/regalo/w-whitepaper.png" x="30.2" y="32" width="39.6" height="35.8" opacity=".3" filter="url(#wHl)" transform="translate(-.8 -1.2)"/><image href="assets/regalo/w-whitepaper.png" x="30.2" y="32" width="39.6" height="35.8" opacity=".8" filter="url(#wDk)"/>
         </svg>
         <div class="to"><small>Para</small><span id="pvPara">ti</span></div>
-        <div class="stamp">Membresía anual<br />Whitepaper</div>
+        <div class="stamp">Suscripción anual<br />Whitepaper</div>
       </div>
       <div class="note">
         <p class="msg" id="pvMsg">Por un año de nuevas historias, perspectivas y aprendizajes.</p>
@@ -206,7 +206,7 @@
 
     var actOk = !act || validAct(act);
     $("actHint").textContent = actOk
-      ? "El enlace del correo de regalo de Substack. Si lo pegas, el botón \"Activar mi membresía\" lleva directo ahí."
+      ? "El enlace del correo de regalo de Substack. Si lo pegas, el botón \"Activar mi suscripción\" lleva directo ahí."
       : "Ese enlace no es de whitepaper.mx ni de substack.com, así que no se incluirá.";
     $("actHint").style.color = actOk ? "" : "var(--red)";
 

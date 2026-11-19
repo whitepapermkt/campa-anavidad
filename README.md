@@ -1,6 +1,6 @@
 # Regala Whitepaper · Navidad 2026
 
-Landing para quien recibe una membresía anual de Whitepaper como regalo: un sobre que se abre y revela la gift card, lo que incluye la membresía y cómo activarla.
+Landing para quien recibe una suscripción anual de Whitepaper como regalo: un sobre que se abre y revela la gift card, lo que incluye la suscripción y cómo activarla.
 
 ## Crear tarjetas
 
