@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Tienes un regalo · Whitepaper</title>
+<meta name="description" content="Alguien te regaló un año de Whitepaper. Abre tu regalo." />
+<meta property="og:title" content="Tienes un regalo de Whitepaper" />
+<meta property="og:description" content="Un regalo con mucho por descubrir: un año de nuevas historias, perspectivas y aprendizajes." />
+<meta property="og:image" content="assets/regalo/gift-card-pino.jpg" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="es_MX" />
+<meta property="og:site_name" content="Whitepaper" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#1b231f" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/regalo/ilustracion-pino.png" />
+<style>
+  :root {
+    --paper: #faf9f7;
+    --ink: #141414;
+    --red: #FF383C;
+    --red-deep: #c9262a;
+    --pine: #1b231f;
+    --pine-2: #232d28;
+    --cream: #f3ecdf;
+    --gray-paper: #eceae6;
+    --graphite: #6b6762;
+    --chalk: #f4f1ea;
+
+    --serif: "Instrument Serif", Georgia, serif;
+    --body: "Spectral", Georgia, serif;
+    --ui: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+    --ease-paper: cubic-bezier(.22,.61,.36,1);
+    --ease-flap: cubic-bezier(.65,0,.35,1);
+    --ease-lift: cubic-bezier(.16,1,.3,1);
+
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --grain-soft: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .22 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    --pencil: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5 C 40 3.2, 70 6.4, 120 4.6 S 190 2.6, 240 4.8 S 300 6.8, 352 4.2 S 420 2.4, 470 4.4 S 540 6.2, 599 3.6' fill='none' stroke='%237b7670' stroke-width='1.3' stroke-linecap='round' opacity='.85'/%3E%3Cpath d='M3 5.4 C 60 4.4, 110 5.8, 170 4.9 S 280 3.9, 330 5.1 S 460 5.6, 597 4.4' fill='none' stroke='%237b7670' stroke-width='.6' opacity='.5'/%3E%3C/svg%3E");
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--pine);
+    color: var(--ink);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- Papel: grano constante ---------- */
+  .grain { position: relative; isolation: isolate; }
+  .grain::after {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: var(--grain); opacity: .07; mix-blend-mode: multiply;
+  }
+  .grain.on-dark::after { mix-blend-mode: overlay; opacity: .18; }
+
+  /* ---------- Etiquetas ---------- */
+  .eyebrow {
+    font-family: var(--ui); font-weight: 600; font-size: .75rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--red);
+    margin: 0;
+  }
+  .meta { font-family: var(--ui); font-weight: 500; font-size: .8rem; color: var(--graphite); letter-spacing: .02em; }
+  .pencil-rule { height: 8px; background: var(--pencil) center / 100% 100% no-repeat; border: 0; margin: 0; }
+
+  /* =========================================================
+     ESCENA 1 — EL SOBRE
+     ========================================================= */
+  .scene {
+    min-height: 100vh; min-height: 100dvh;
+    background:
+      radial-gradient(120% 70% at 50% 42%, #26322c 0%, var(--pine) 60%, #141a17 100%);
+    color: var(--chalk);
+    display: flex; flex-direction: column; align-items: center;
+    padding: max(18px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+  .topbar {
+    width: 100%; max-width: 1080px;
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(244,241,234,.16);
+  }
+  .wordmark {
+    font-family: var(--ui); font-weight: 500; letter-spacing: .32em; font-size: .78rem;
+    color: var(--chalk); text-decoration: none;
+  }
+  .edition { font-family: var(--ui); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(244,241,234,.55); }
+  .skip {
+    font: 500 .75rem/1 var(--ui); letter-spacing: .06em; color: rgba(244,241,234,.7);
+    background: none; border: 0; padding: 10px 0 10px 12px; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(244,241,234,.3);
+  }
+  .skip:hover { color: var(--chalk); }
+  .topbar .edition { display: none; }
+  @media (min-width: 640px) { .topbar .edition { display: block; } }
+
+  .intro { text-align: center; margin-top: clamp(28px, 6vh, 64px); max-width: 640px; }
+  .intro .eyebrow { margin-bottom: 14px; }
+  .intro h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(2.5rem, 6.2vw + .6rem, 4.75rem); line-height: .98; letter-spacing: -.015em;
+    margin: 0;
+  }
+  .intro h1 em { font-style: italic; }
+  .from-line {
+    font-family: var(--body); font-style: italic; font-size: clamp(1.05rem, .4vw + 1rem, 1.25rem);
+    color: rgba(244,241,234,.75); margin: 14px 0 0;
+  }
+
+  /* ---------- Stage ---------- */
+  .stage-wrap {
+    flex: 1; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding-top: clamp(80px, 13vh, 140px);
+  }
+  .stage {
+    position: relative;
+    width: min(100%, 520px);
+    aspect-ratio: 1.55;
+    transform-origin: 50% 60%;
+    perspective: 1400px;
+  }
+  .envelope {
+    position: absolute; inset: 0;
+    appearance: none; border: 0; padding: 0; margin: 0; background: none; cursor: pointer;
+    border-radius: 3px;
+  }
+  /* La respiración vive en el stage: un transform en el botón aislaría sus capas de la tarjeta */
+  .stage:not(.is-opening):not(.is-done) { animation: breathe 3.2s ease-in-out infinite alternate; }
+  .stage:not(.is-opening):not(.is-done):active { animation-play-state: paused; }
+  .envelope:focus-visible { outline: 2px solid var(--red); outline-offset: 8px; }
+  @keyframes breathe { from { transform: translateY(0) scale(1); } to { transform: translateY(-3px) scale(1.012); } }
+
+  .env-shadow {
+    position: absolute; left: 6%; right: 6%; bottom: -26px; height: 40px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(0,0,0,.55), transparent);
+    filter: blur(6px); opacity: .9;
+    transition: opacity .6s var(--ease-paper);
+  }
+
+  /* Capas del sobre */
+  .env-back, .env-front, .env-flap { position: absolute; inset: 0; border-radius: 3px; }
+  .env-back, .env-front { transition: transform .6s var(--ease-paper), opacity .6s var(--ease-paper); }
+  .env-back {
+    z-index: 0;
+    background-color: var(--pine-2);
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Ctext x='8' y='30' font-family='Georgia,serif' font-style='italic' font-size='20' fill='%23FF383C' fill-opacity='.16'%3Ew%3C/text%3E%3C/svg%3E");
+    background-size: 48px 48px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
+  }
+  .paper-tex {
+    background-color: var(--cream);
+    background-image:
+      var(--grain-soft),
+      radial-gradient(140% 120% at 50% 40%, transparent 60%, rgba(120,100,70,.10) 100%);
+  }
+  .env-front {
+    z-index: 3;
+    clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+    box-shadow: inset 0 -1px 0 rgba(0,0,0,.06);
+  }
+  /* pliegues del bolsillo */
+  .env-front::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(to top right, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) left bottom / 50% 100% no-repeat,
+      linear-gradient(to top left, transparent calc(50% - .6px), rgba(0,0,0,.07) 50%, transparent calc(50% + .6px)) right bottom / 50% 100% no-repeat;
+  }
+  .env-front .env-label {
+    position: absolute; left: 7%; bottom: 9%; text-align: left;
+    font-family: var(--ui); color: rgba(20,20,20,.62);
+  }
+  .env-label small { display: block; font-size: clamp(.55rem, 1.6vw, .66rem); letter-spacing: .16em; text-transform: uppercase; }
+  .env-label span { display: block; font-family: var(--serif); font-style: italic; font-size: clamp(1.05rem, 3.6vw, 1.4rem); color: var(--ink); margin-top: 2px; }
+  .env-front .env-stamp {
+    position: absolute; right: 6%; bottom: 9%;
+    font: 600 clamp(.5rem, 1.4vw, .6rem)/1.3 var(--ui); letter-spacing: .18em; color: rgba(20,20,20,.5);
+    text-align: right; text-transform: uppercase;
+  }
+  .env-flap {
+    z-index: 4;
+    height: 60%;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: 50% 0;
+    transform: perspective(1400px) rotateX(0deg);
+    transition: transform .72s var(--ease-flap) .18s, opacity .6s var(--ease-paper);
+    filter: drop-shadow(0 2px 0 rgba(0,0,0,.05));
+  }
+  .env-flap::after { /* sombra del borde de la solapa */
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 70%, rgba(80,60,30,.10));
+  }
+
+  /* Lacre */
+  .seal {
+    position: absolute; z-index: 5; left: 50%; top: 60%;
+    width: clamp(54px, 15%, 78px); aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .seal .half { position: absolute; inset: 0; transition: transform .26s var(--ease-paper), opacity .26s var(--ease-paper); }
+  .seal .half.l { clip-path: inset(0 50% 0 0); }
+  .seal .half.r { clip-path: inset(0 0 0 50%); }
+  .seal svg { width: 100%; height: 100%; display: block; filter: drop-shadow(0 3px 3px rgba(0,0,0,.28)); }
+  .seal .shine {
+    position: absolute; inset: 10%; border-radius: 50%; overflow: hidden;
+  }
+  .seal .shine::before {
+    content: ""; position: absolute; inset: -20%;
+    background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,.28) 50%, transparent 65%);
+    transform: translateX(-120%);
+    animation: shine 5s var(--ease-paper) 1.2s infinite;
+  }
+  @keyframes shine { 0% { transform: translateX(-120%); } 28%, 100% { transform: translateX(120%); } }
+
+  /* Tarjeta */
+  .card {
+    position: absolute; z-index: 2;
+    left: 4.5%; right: 4.5%; top: 5%; bottom: 7%;
+    border-radius: 2px;
+    container-type: inline-size;
+    display: grid; grid-template-columns: 40% 1fr; align-items: center;
+    padding: 5cqw 5cqw 5cqw 3cqw;
+    box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 18px 40px -22px rgba(0,0,0,.6);
+    transition: transform .75s var(--ease-lift), box-shadow .6s;
+    pointer-events: none;
+  }
+  .card .illus { position: relative; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .card .illus img { width: 88%; height: auto; max-height: 100%; object-fit: contain; mix-blend-mode: multiply; }
+  .card .txt { text-align: center; color: var(--ink); }
+  .card .brand { font: 500 3.1cqw/1 var(--ui); letter-spacing: .3em; margin: 0 0 5cqw; }
+  .card .phrase { font: 400 6.4cqw/1.08 var(--serif); margin: 0 0 5cqw; letter-spacing: -.005em; }
+  .card .phrase span { display: block; }
+  .card .kind { font: 400 2.5cqw/1.3 var(--ui); margin: 0; color: #333; }
+  .card .kind b { display: block; font-weight: 600; letter-spacing: .2em; margin-top: 1.2cqw; font-size: 2.3cqw; }
+
+  /* Destellos */
+  .sparkles { position: absolute; inset: 0; z-index: 7; pointer-events: none; }
+  .sparkles img { position: absolute; width: 30%; opacity: 0; transform: scale(.6); }
+  .sparkles .s1 { right: -9%; top: -16%; }
+  .sparkles .s2 { left: -10%; bottom: -12%; width: 22%; transform: scale(.6) rotate(180deg); }
+
+  .hint {
+    margin-top: 34px; text-align: center;
+    font: 500 .72rem/1 var(--ui); letter-spacing: .2em; text-transform: uppercase;
+    color: rgba(244,241,234,.8);
+    animation: hint 3.2s ease-in-out infinite alternate;
+    transition: opacity .3s;
+  }
+  @keyframes hint { from { opacity: .45; } to { opacity: .95; } }
+
+  /* ---------- Secuencia de apertura ---------- */
+  .stage.is-opening .envelope { animation: none; }
+  .stage.is-opening .seal .half.l { transform: translate(-6px, 4px) rotate(-8deg); opacity: 0; }
+  .stage.is-opening .seal .half.r { transform: translate(6px, 4px) rotate(8deg); opacity: 0; }
+  .stage.is-opening .seal .shine { display: none; }
+  .stage.is-opening .env-flap { transform: perspective(1400px) rotateX(-180deg); }
+  .stage.flap-back .env-flap { z-index: 1; }
+  .stage.is-lifting .card { transform: translateY(-62%) rotateX(3deg); }
+  .stage.is-out .card {
+    z-index: 6;
+    transform: translateY(0) scale(1.09);
+    transition: transform .7s var(--ease-paper), box-shadow .6s;
+    box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6);
+  }
+  .stage.is-out .env-back, .stage.is-out .env-front { transform: translateY(40%); opacity: 0; }
+  .stage.is-out .env-flap { transform: perspective(1400px) translateY(40%) rotateX(-180deg); opacity: 0; transition: transform .6s var(--ease-paper), opacity .6s var(--ease-paper); }
+  .stage.is-out .envelope { pointer-events: none; }
+  .stage.is-out .env-shadow { opacity: 0; }
+  .stage.is-out ~ .hint { opacity: 0; }
+  .stage.sparkle .sparkles .s1 { animation: sparkle 1.6s var(--ease-paper) forwards; }
+  .stage.sparkle .sparkles .s2 { animation: sparkle2 1.6s var(--ease-paper) .15s forwards; }
+  @keyframes sparkle { 0% { opacity: 0; transform: scale(.6); } 30% { opacity: 1; transform: scale(1); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes sparkle2 { 0% { opacity: 0; transform: scale(.6) rotate(180deg); } 30% { opacity: 1; transform: scale(1) rotate(180deg); } 100% { opacity: .9; transform: scale(1) rotate(180deg); } }
+
+  /* Texto de la tarjeta entra como tinta */
+  .card .txt > * { clip-path: inset(0 0 0 0); }
+  .stage.ink .card .txt > *, .stage.ink .card .phrase span { animation: ink .65s var(--ease-paper) both; }
+  .stage.ink .card .brand { animation-delay: 0s; }
+  .stage.ink .card .phrase span:nth-child(1) { animation-delay: .12s; }
+  .stage.ink .card .phrase span:nth-child(2) { animation-delay: .3s; }
+  .stage.ink .card .phrase span:nth-child(3) { animation-delay: .48s; }
+  .stage.ink .card .phrase span:nth-child(4) { animation-delay: .66s; }
+  .stage.ink .card .kind { animation-delay: .9s; }
+  .stage.ink .card .phrase { animation: none; }
+  @keyframes ink { from { clip-path: inset(0 100% 0 0); opacity: .3; } to { clip-path: inset(0 0 0 0); opacity: 1; } }
+
+  /* Estado final (también para "saltar" y recarga) */
+  .stage.is-done .envelope, .stage.is-done .env-shadow { display: none; }
+  .stage.is-done .card { z-index: 6; transform: scale(1.09); transition: none; box-shadow: 0 1px 0 rgba(0,0,0,.05), 0 30px 60px -20px rgba(0,0,0,.6); }
+  .stage.is-done .sparkles img { opacity: 1; transform: scale(1); }
+  .stage.is-done .sparkles .s2 { transform: rotate(180deg); }
+  .stage.is-done ~ .hint { display: none; }
+
+  /* Después de abrir: nota y acciones */
+  @media (min-width: 900px) { .stage { width: 600px; } }
+  .after { width: 100%; max-width: 520px; margin-top: 44px; display: none; text-align: center; }
+  body.revealed .after { display: block; animation: rise .7s var(--ease-paper) both; }
+  body.revealed .stage-wrap { padding-top: clamp(56px, 9vh, 100px); }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+  .note {
+    position: relative; text-align: left;
+    color: var(--ink); padding: 26px 26px 22px; border-radius: 2px;
+    box-shadow: 0 20px 40px -24px rgba(0,0,0,.7);
+    transform: rotate(-.8deg);
+  }
+  .note .to { font: 600 .7rem/1 var(--ui); letter-spacing: .16em; text-transform: uppercase; color: var(--graphite); margin: 0 0 12px; }
+  .note .msg { font: italic 400 clamp(1.25rem, 1vw + 1.05rem, 1.5rem)/1.35 var(--serif); margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
+  .note .sign { display: flex; align-items: center; justify-content: flex-end; gap: 10px; margin-top: 16px; font: italic 1.05rem/1 var(--body); }
+  .note .sign img { width: 26px; height: auto; }
+  .note .hole { position: absolute; top: 12px; right: 14px; width: 9px; height: 9px; border-radius: 50%; background: var(--pine); box-shadow: inset 0 1px 1px rgba(0,0,0,.5); }
+
+  .ready { font: 400 1.05rem/1.55 var(--body); color: rgba(244,241,234,.85); margin: 30px auto 22px; max-width: 34ch; }
+  .ready strong { color: var(--chalk); font-weight: 500; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    min-height: 54px; padding: 0 28px; border-radius: 3px; border: 0;
+    font: 600 .82rem/1 var(--ui); letter-spacing: .12em; text-transform: uppercase;
+    text-decoration: none; cursor: pointer;
+    transition: transform .15s, background-color .2s, color .2s;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn-red { background: var(--red); color: #fff; }
+  .btn-red:hover { background: #ff4d50; }
+  .btn-ink { background: var(--ink); color: var(--paper); }
+  .btn-ink:hover { background: #000; text-decoration: underline; text-decoration-color: var(--red); text-underline-offset: 5px; text-decoration-thickness: 2px; }
+  .btn-chalk { background: var(--chalk); color: var(--ink); }
+  .btn-chalk:hover { background: #fff; }
+  .btn-block { width: 100%; }
+  .see-more {
+    display: inline-block; margin-top: 22px; padding: 8px;
+    font: 500 .78rem/1 var(--ui); letter-spacing: .08em; color: rgba(244,241,234,.7); text-decoration: none;
+  }
+  .see-more:hover { color: var(--chalk); }
+  .see-more .arrow { display: inline-block; animation: nudge 1.8s ease-in-out infinite; }
+  @keyframes nudge { 50% { transform: translateY(3px); } }
+
+  /* =========================================================
+     CONTENIDO (papel)
+     ========================================================= */
+  .content { display: none; background: var(--paper); }
+  body.revealed .content { display: block; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 720px) { .wrap { padding: 0 40px; } }
+  section { padding: clamp(64px, 10vw, 120px) 0; }
+
+  .double-rule { border-top: 2px solid var(--ink); padding-top: 3px; }
+  .double-rule::before { content: ""; display: block; border-top: 1px solid var(--ink); }
+
+  /* Apertura editorial */
+  .lede { text-align: center; }
+  .lede img.spark { width: 120px; margin: 0 auto 22px; }
+  .lede h2 {
+    font: 400 clamp(2.5rem, 6vw + .5rem, 5.5rem)/.98 var(--serif); letter-spacing: -.02em;
+    margin: 16px auto 26px; max-width: 13ch;
+  }
+  .lede h2 em { font-style: italic; }
+  .lede p { font-size: clamp(1.08rem, .4vw + 1rem, 1.28rem); line-height: 1.6; max-width: 56ch; margin: 0 auto; color: #2a2a2a; }
+
+  /* Índice "Tu regalo incluye" */
+  .index { background: var(--gray-paper); }
+  .index-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 12px 0 0; }
+  .index-head h2 { font: 400 clamp(2.1rem, 4vw + .5rem, 3.6rem)/1 var(--serif); margin: 26px 0 10px; letter-spacing: -.01em; }
+  .index-head .meta { margin-top: 10px; }
+  .items { list-style: none; margin: 30px 0 0; padding: 0; }
+  .item {
+    display: grid; grid-template-columns: 2.6rem 1fr; gap: 4px 14px;
+    padding: 26px 0 28px;
+    position: relative;
+  }
+  .item + .item::before {
+    content: ""; position: absolute; left: 0; right: 0; top: -4px; height: 8px;
+    background: var(--pencil) center / 100% 100% no-repeat;
+  }
+  .item .num { font: 400 1.6rem/1 var(--serif); color: var(--red); padding-top: .25rem; }
+  .item h3 { font: 400 clamp(1.7rem, 2.6vw + .8rem, 2.6rem)/1.05 var(--serif); margin: 0; letter-spacing: -.005em; }
+  .item p { grid-column: 2; margin: 8px 0 0; font: italic 400 1.08rem/1.55 var(--body); color: #3a3a3a; max-width: 52ch; }
+  .item .freq { grid-column: 2; margin-top: 10px; }
+  @media (min-width: 820px) {
+    .item { grid-template-columns: 4rem minmax(0, 6fr) minmax(0, 4fr) 9rem; align-items: baseline; gap: 0 24px; }
+    .item .num { font-size: 2.1rem; }
+    .item p { grid-column: auto; margin: 0; }
+    .item .freq { grid-column: auto; margin: 0; text-align: right; }
+  }
+
+  /* Cita */
+  .pull { text-align: center; background: var(--paper); }
+  .pull blockquote { margin: 0 auto; max-width: 18ch; font: italic 400 clamp(2.2rem, 5vw + .5rem, 4.4rem)/1.02 var(--serif); letter-spacing: -.015em; }
+  .pull .pencil-rule { max-width: 220px; margin: 30px auto 0; }
+
+  /* Comunidad */
+  .proof { padding-top: 0; }
+  .proof .grid { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--ink); }
+  .proof .stat { padding: 26px 0; border-bottom: 1px solid rgba(20,20,20,.15); }
+  .proof .stat b { display: block; font: 400 clamp(3rem, 5vw + 1rem, 4.6rem)/1 var(--serif); font-variant-numeric: tabular-nums; letter-spacing: -.02em; }
+  .proof .stat span { display: block; margin-top: 8px; font: 400 1rem/1.45 var(--body); color: #3a3a3a; }
+  @media (min-width: 720px) {
+    .proof .grid { grid-template-columns: repeat(3, 1fr); }
+    .proof .stat { padding: 30px 28px 30px 0; border-bottom: 0; }
+    .proof .stat + .stat { padding-left: 28px; border-left: 1px solid rgba(20,20,20,.15); }
+  }
+  .proof .eyebrow { margin-bottom: 18px; }
+
+  /* Activación */
+  .activate { background: var(--pine); color: var(--chalk); text-align: center; }
+  .activate .gifts { width: 170px; margin: 0 auto 26px; }
+  .activate h2 { font: 400 clamp(2.3rem, 5vw + .5rem, 4.2rem)/1 var(--serif); margin: 14px auto 40px; max-width: 14ch; letter-spacing: -.015em; }
+  .activate h2 em { font-style: italic; }
+  .steps { list-style: none; padding: 0; margin: 0 auto 44px; max-width: 920px; display: grid; gap: 0; text-align: left; counter-reset: s; }
+  .steps li { padding: 22px 0; border-top: 1px solid rgba(244,241,234,.18); display: grid; grid-template-columns: 2.6rem 1fr; gap: 14px; }
+  .steps li::before { counter-increment: s; content: counter(s, decimal-leading-zero); font: 400 1.5rem/1 var(--serif); color: var(--red); }
+  .steps b { display: block; font: 400 1.5rem/1.15 var(--serif); margin-bottom: 4px; }
+  .steps span { font: 400 1rem/1.55 var(--body); color: rgba(244,241,234,.75); }
+  @media (min-width: 820px) {
+    .steps { grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .steps li { grid-template-columns: 1fr; gap: 10px; }
+  }
+  .activate .small { margin-top: 18px; font: 400 .85rem/1.5 var(--ui); color: rgba(244,241,234,.55); }
+
+  /* FAQ */
+  .faq h2 { font: 400 clamp(2rem, 3vw + .8rem, 3rem)/1 var(--serif); margin: 26px 0 18px; }
+  .faq details { border-bottom: 1px solid rgba(20,20,20,.15); }
+  .faq summary {
+    list-style: none; cursor: pointer; padding: 22px 36px 22px 0; position: relative;
+    font: 400 clamp(1.3rem, 1vw + 1rem, 1.6rem)/1.2 var(--serif);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font: 300 1.6rem/1 var(--ui); color: var(--red); transition: transform .25s; }
+  .faq details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq details p { margin: 0 0 24px; font: 400 1.05rem/1.6 var(--body); color: #333; max-width: 62ch; }
+
+  /* Regalar a alguien más */
+  .refer { padding-top: 0; }
+  .refer-card {
+    display: grid; grid-template-columns: 1fr; overflow: hidden; border-radius: 3px;
+    background: var(--pine); color: var(--chalk);
+  }
+  .refer-card .photo { aspect-ratio: 1.25; background: #0f1411 url("assets/regalo/gift-card-pino.jpg") center / cover no-repeat; }
+  .refer-card .body { padding: clamp(28px, 4vw, 52px); display: flex; flex-direction: column; justify-content: center; }
+  .refer-card h2 { font: 400 clamp(2rem, 3vw + .8rem, 3.2rem)/1.02 var(--serif); margin: 14px 0 16px; letter-spacing: -.01em; }
+  .refer-card p { font: 400 1.05rem/1.6 var(--body); color: rgba(244,241,234,.8); margin: 0 0 26px; max-width: 42ch; }
+  .refer-card .price { font: 400 2.4rem/1 var(--serif); color: var(--chalk); margin: 0 0 4px; }
+  .refer-card .price small { font: 500 .8rem/1 var(--ui); letter-spacing: .08em; color: rgba(244,241,234,.6); margin-left: 6px; }
+  .refer-card .btn { align-self: flex-start; margin-top: 20px; }
+  @media (min-width: 820px) { .refer-card { grid-template-columns: 1.1fr 1fr; } .refer-card .photo { aspect-ratio: auto; min-height: 440px; } }
+
+  /* Colofón */
+  footer { background: var(--paper); padding: 0 0 max(40px, env(safe-area-inset-bottom)); }
+  footer .inner { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 18px; padding-top: 22px; }
+  footer .wordmark { color: var(--ink); }
+  footer p { margin: 8px 0 0; font: 400 .95rem/1.5 var(--body); color: #444; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 6px 20px; font: 500 .8rem/1 var(--ui); }
+  footer nav a { text-decoration: none; color: var(--graphite); padding: 6px 0; }
+  footer nav a:hover { color: var(--ink); }
+  footer .colophon { width: 100%; font: 400 .75rem/1.5 var(--ui); color: #8a8680; margin-top: 18px; }
+
+  /* Entradas al hacer scroll */
+  .rv { opacity: 0; transform: translateY(24px); transition: opacity .7s var(--ease-paper), transform .7s var(--ease-paper); }
+  .rv.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: .001s !important; animation-iteration-count: 1 !important; transition-duration: .2s !important; transition-delay: 0s !important; }
+    .envelope, .hint, .see-more .arrow { animation: none !important; }
+    .rv { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ ESCENA: EL SOBRE ============ -->
+<header class="scene grain on-dark" id="top">
+  <div class="topbar">
+    <a class="wordmark" href="https://www.whitepaper.mx" aria-label="Whitepaper">WHITEPAPER</a>
+    <span class="edition">Edición de regalo · Navidad 2026</span>
+    <button class="skip" id="skip" type="button">Saltar animación</button>
+  </div>
+
+  <div class="intro">
+    <p class="eyebrow" id="eyebrow">Tienes un regalo</p>
+    <h1>Un regalo con <em>mucho por descubrir.</em></h1>
+    <p class="from-line" id="fromLine" hidden></p>
+  </div>
+
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <div class="env-shadow" aria-hidden="true"></div>
+
+      <!-- La tarjeta (vive dentro del sobre) -->
+      <div class="card paper-tex" id="card" role="img" aria-label="Gift card de Whitepaper: Por un año de nuevas historias, perspectivas y aprendizajes. Membresía anual a Whitepaper.">
+        <div class="illus"><img src="assets/regalo/ilustracion-pino.png" alt="" width="678" height="848" /></div>
+        <div class="txt" aria-hidden="true">
+          <p class="brand">WHITEPAPER</p>
+          <p class="phrase"><span>Por un año</span><span>de nuevas historias,</span><span>perspectivas y</span><span>aprendizajes</span></p>
+          <p class="kind">Membresía anual a Whitepaper<b>GIFT CARD</b></p>
+        </div>
+      </div>
+
+      <button class="envelope" id="envelope" type="button" aria-label="Abrir tu regalo">
+        <span class="env-back" aria-hidden="true"></span>
+        <span class="env-front paper-tex" aria-hidden="true">
+          <span class="env-label"><small>Para</small><span id="envTo">ti</span></span>
+          <span class="env-stamp">Membresía anual<br />Whitepaper</span>
+        </span>
+        <span class="env-flap paper-tex" aria-hidden="true"></span>
+      </button>
+
+      <div class="seal" aria-hidden="true">
+        <div class="half l"><svg viewBox="0 0 100 100"><use href="#lacre"/></svg></div>
+        <div class="half r"><svg viewBox="0 0 100 100"><use href="#lacre"/></svg></div>
+        <div class="shine"></div>
+      </div>
+
+      <div class="sparkles" aria-hidden="true">
+        <img class="s1" src="assets/regalo/destellos.png" alt="" />
+        <img class="s2" src="assets/regalo/destellos.png" alt="" />
+      </div>
+    </div>
+
+    <p class="hint" id="hint" aria-hidden="true">Toca el sobre para abrirlo</p>
+
+    <div class="after" id="after" aria-live="polite">
+      <div class="note paper-tex" id="note">
+        <span class="hole" aria-hidden="true"></span>
+        <p class="to" id="noteTo">Para ti</p>
+        <p class="msg" id="noteMsg">Por un año de nuevas historias, perspectivas y aprendizajes.</p>
+        <div class="sign"><span id="noteFrom">Con cariño</span><svg width="26" height="14" viewBox="0 0 26 14" aria-hidden="true"><path d="M2 3 L7 11 L12 4 L17 11 L23 2" fill="none" stroke="#FF383C" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+
+      <p class="ready">Tu <strong>membresía anual a Whitepaper</strong> ya está lista. Un año completo de historias, análisis y conversaciones sobre los negocios en México.</p>
+      <a class="btn btn-red btn-block activate-link" data-evt="activate_click" data-pos="hero" href="https://www.whitepaper.mx">Activar mi membresía</a>
+      <a class="see-more" href="#incluye">Descubre todo lo que incluye <span class="arrow">↓</span></a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ CONTENIDO ============ -->
+<main class="content" id="content">
+
+  <section class="lede grain">
+    <div class="wrap rv">
+      <img class="spark" src="assets/regalo/destellos.png" alt="" />
+      <p class="eyebrow">El gusto por saber más</p>
+      <h2>Un año tiene <em>muchas historias.</em></h2>
+      <p>Desde hoy recibes lo que lee la comunidad empresarial de México: la noticia, el contexto y lo que hay detrás. Escrito con rigor, sin ruido, para leerse en minutos o escucharse en el camino.</p>
+    </div>
+  </section>
+
+  <section class="index grain" id="incluye">
+    <div class="wrap">
+      <div class="double-rule rv">
+        <div class="index-head">
+          <div>
+            <p class="eyebrow" style="margin-top:22px">Tu regalo incluye</p>
+            <h2>Más historias. <em>Nuevas perspectivas.</em></h2>
+          </div>
+          <span class="meta">Membresía anual · 12 meses</span>
+        </div>
+      </div>
+
+      <ol class="items">
+        <li class="item rv">
+          <span class="num">01</span>
+          <h3>Whitepaper Hoy</h3>
+          <p>Lo esencial de los negocios en México, cada mañana en tu correo. También en audio de 6 a 8 minutos.</p>
+          <span class="meta freq">Lunes a viernes</span>
+        </li>
+        <li class="item rv">
+          <span class="num">02</span>
+          <h3>Spotlight</h3>
+          <p>Investigaciones a fondo sobre las empresas que mueven al país.</p>
+          <span class="meta freq">Investigación</span>
+        </li>
+        <li class="item rv">
+          <span class="num">03</span>
+          <h3>Principales</h3>
+          <p>Análisis de las industrias y las decisiones más relevantes de México.</p>
+          <span class="meta freq">Análisis</span>
+        </li>
+        <li class="item rv">
+          <span class="num">04</span>
+          <h3>Overview</h3>
+          <p>La edición de fin de semana, con contexto, lecturas y recomendaciones.</p>
+          <span class="meta freq">Fin de semana</span>
+        </li>
+        <li class="item rv">
+          <span class="num">05</span>
+          <h3>Whitepaper Audio</h3>
+          <p>Todo Whitepaper en audio, en tu plataforma favorita.</p>
+          <span class="meta freq">Audio</span>
+        </li>
+        <li class="item rv">
+          <span class="num">06</span>
+          <h3>Podcasts para suscriptores</h3>
+          <p>Dark Side of the Road y Arquitectura de Negocios, además de Whitepaper 10.</p>
+          <span class="meta freq">Podcast</span>
+        </li>
+        <li class="item rv">
+          <span class="num">07</span>
+          <h3>Video</h3>
+          <p>Entrevistas y análisis en video, reservados para suscriptores.</p>
+          <span class="meta freq">Video</span>
+        </li>
+        <li class="item rv">
+          <span class="num">08</span>
+          <h3>Eventos</h3>
+          <p>Encuentros con la comunidad empresarial que lee Whitepaper.</p>
+          <span class="meta freq">Comunidad</span>
+        </li>
+        <li class="item rv">
+          <span class="num">09</span>
+          <h3>Archivo completo</h3>
+          <p>Todas las ediciones e investigaciones publicadas, para consultar cuando quieras.</p>
+          <span class="meta freq">Archivo</span>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="pull grain">
+    <div class="wrap rv">
+      <blockquote>Un regalo que abre nuevas conversaciones.</blockquote>
+      <div class="pencil-rule" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section class="proof grain">
+    <div class="wrap">
+      <p class="eyebrow rv">Te sumas a una comunidad</p>
+      <div class="grid">
+        <div class="stat rv"><b>14,500+</b><span>suscriptores que leen Whitepaper cada mañana.</span></div>
+        <div class="stat rv"><b>135,000+</b><span>lectores en la comunidad empresarial de México.</span></div>
+        <div class="stat rv"><b>65%+</b><span>abre cada edición. Se lee de verdad.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="activate grain on-dark" id="activar">
+    <div class="wrap">
+      <img class="gifts rv" src="assets/regalo/regalos-gis.png" alt="" />
+      <p class="eyebrow rv">Cómo activarlo</p>
+      <h2 class="rv">Tu año empieza <em>con un clic.</em></h2>
+      <ol class="steps">
+        <li class="rv"><div><b>Busca el correo</b><span>Te llegó un mensaje de Whitepaper con tu regalo. Revisa también Promociones o Spam.</span></div></li>
+        <li class="rv"><div><b>Abre el enlace</b><span>El botón de activación te lleva a Substack, donde vive tu membresía.</span></div></li>
+        <li class="rv"><div><b>Confirma tu cuenta</b><span>Recibe tu primer Whitepaper Hoy el siguiente día hábil.</span></div></li>
+      </ol>
+      <a class="btn btn-chalk activate-link rv" data-evt="activate_click" data-pos="steps" href="https://www.whitepaper.mx">Activar mi membresía</a>
+      <p class="small rv">Tu membresía ya está pagada. No tienes que ingresar ninguna tarjeta.</p>
+    </div>
+  </section>
+
+  <section class="faq grain">
+    <div class="wrap" style="max-width:820px">
+      <div class="double-rule rv"><h2>Preguntas frecuentes</h2></div>
+      <details class="rv"><summary>¿Tengo que pagar algo?</summary><p>No. Tu membresía anual ya está cubierta. Solo actívala con el enlace del correo.</p></details>
+      <details class="rv"><summary>No encuentro el correo. ¿Qué hago?</summary><p>Revisa Promociones o Spam y busca “Whitepaper”. Si no aparece, pídele a quien te lo regaló que confirme tu correo, o escríbenos respondiendo a cualquier edición de Whitepaper.</p></details>
+      <details class="rv"><summary>Ya soy suscriptor. ¿Pierdo mi regalo?</summary><p>No. Escríbenos y sumamos el año de regalo a tu membresía actual.</p></details>
+      <details class="rv"><summary>¿Qué pasa al terminar el año?</summary><p>No se cobra nada de forma automática. Tú decides si continúas.</p></details>
+    </div>
+  </section>
+
+  <section class="refer grain">
+    <div class="wrap">
+      <div class="refer-card rv">
+        <div class="photo" role="img" aria-label="Gift card de Whitepaper sobre ramas de pino"></div>
+        <div class="body">
+          <p class="eyebrow">Regala Whitepaper</p>
+          <h2>¿Alguien más tiene el gusto por saber más?</h2>
+          <p>Comparte lo que ahora lees. Llega por correo, el día que tú eliges y con tu nombre.</p>
+          <p class="price">$1,590 <small>MXN · un año completo</small></p>
+          <a class="btn btn-red" id="giftLink" data-evt="referral_click" href="https://www.whitepaper.mx/subscribe?gift=true">Regalar Whitepaper</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div class="double-rule"></div>
+      <div class="inner">
+        <div>
+          <a class="wordmark" href="https://www.whitepaper.mx">WHITEPAPER</a>
+          <p>Lo que la comunidad empresarial necesita saber.</p>
+        </div>
+        <nav aria-label="Pie de página">
+          <a href="https://www.whitepaper.mx">Whitepaper.mx</a>
+          <a href="https://www.whitepaper.mx/podcast">Podcasts</a>
+          <a href="https://www.whitepaper.mx/archive">Archivo</a>
+        </nav>
+        <p class="colophon">© 2026 Whitepaper.mx · Compuesto en Instrument Serif, Spectral e Inter. Edición de regalo, Navidad 2026.</p>
+      </div>
+    </div>
+  </footer>
+</main>
+
+<!-- Lacre (símbolo reutilizable) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="wax" cx="38%" cy="32%" r="75%">
+      <stop offset="0" stop-color="#ff5a5d"/>
+      <stop offset=".55" stop-color="#FF383C"/>
+      <stop offset="1" stop-color="#b81f24"/>
+    </radialGradient>
+    <symbol id="lacre" viewBox="0 0 100 100">
+      <path fill="url(#wax)" d="M50 4c6 0 9 4 14 5s10-1 14 3 2 9 5 13 8 7 8 13-4 8-4 13 4 9 2 14-8 6-10 10-2 10-7 12-9-1-14 1-8 6-14 6-8-4-13-6-11 1-15-3-2-9-5-13-9-7-9-13 5-8 5-13-4-9-1-13 9-4 12-8 3-10 8-12 9 1 14-1 6-9 11-9z"/>
+      <circle cx="50" cy="50" r="30" fill="none" stroke="#a51a1f" stroke-opacity=".55" stroke-width="2"/>
+      <circle cx="50" cy="50" r="31.5" fill="none" stroke="#ff8a8c" stroke-opacity=".35" stroke-width="1"/>
+      <path d="M33 41 L41 60 L50 45 L59 60 L67 40" fill="none" stroke="#9e161b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 1.4)" opacity=".7"/>
+      <path d="M33 41 L41 60 L50 45 L59 60 L67 40" fill="none" stroke="#ff8f91" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+(function () {
+  "use strict";
+  var $ = function (id) { return document.getElementById(id); };
+  var stage = $("stage"), env = $("envelope"), body = document.body;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- Personalización: ?para=Ana&de=Carlos&msg=...&activar=https://... ---- */
+  var q = new URLSearchParams(location.search);
+  function clean(v, max) {
+    if (!v) return "";
+    v = String(v).replace(/[\u0000-\u001f<>]/g, " ").replace(/\s+/g, " ").trim();
+    return v.slice(0, max);
+  }
+  var para = clean(q.get("para"), 40);
+  var de = clean(q.get("de"), 40);
+  var msg = clean(q.get("msg"), 280);
+
+  if (para) {
+    $("eyebrow").textContent = "Un regalo para " + para;
+    $("envTo").textContent = para;
+    $("noteTo").textContent = "Para " + para;
+    env.setAttribute("aria-label", "Abrir tu regalo" + (de ? " de " + de : ""));
+    document.title = para + ", tienes un regalo · Whitepaper";
+  }
+  if (de) {
+    $("fromLine").textContent = "De parte de " + de;
+    $("fromLine").hidden = false;
+    $("noteFrom").textContent = de;
+  }
+  if (msg) $("noteMsg").textContent = msg;
+
+  // Enlace de activación: solo dominios de Whitepaper o Substack
+  var act = q.get("activar");
+  if (act) {
+    try {
+      var u = new URL(act);
+      if (u.protocol === "https:" && /(^|\.)(whitepaper\.mx|substack\.com)$/.test(u.hostname)) {
+        document.querySelectorAll(".activate-link").forEach(function (a) { a.href = u.href; });
+      }
+    } catch (e) {}
+  }
+
+  // UTMs para el loop de referidos
+  var gift = new URL($("giftLink").href);
+  gift.searchParams.set("utm_source", "gift_landing");
+  gift.searchParams.set("utm_medium", "referral");
+  gift.searchParams.set("utm_campaign", "regala_whitepaper_2026");
+  if (q.get("gift_id")) gift.searchParams.set("ref", clean(q.get("gift_id"), 64));
+  $("giftLink").href = gift.href;
+
+  /* ---- Analítica (GTM / GA4 si existe) ---- */
+  window.dataLayer = window.dataLayer || [];
+  function track(evt, extra) {
+    var d = { event: evt, campaign: "regala_whitepaper_2026" };
+    if (extra) for (var k in extra) d[k] = extra[k];
+    window.dataLayer.push(d);
+  }
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("[data-evt]");
+    if (a) track(a.getAttribute("data-evt"), { position: a.getAttribute("data-pos") || "" });
+  });
+
+  /* ---- Secuencia de apertura ---- */
+  var KEY = "wp_regalo_abierto";
+  var opened = false, timers = [];
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function store() { try { sessionStorage.setItem(KEY, "1"); } catch (e) {} }
+
+  function reveal(focus) {
+    body.classList.add("revealed");
+    observe();
+    if (focus) setTimeout(function () { $("note").setAttribute("tabindex", "-1"); $("note").focus({ preventScroll: true }); }, 50);
+  }
+
+  function finish() {
+    timers.forEach(clearTimeout); timers = [];
+    stage.className = "stage is-done";
+    reveal(true);
+  }
+
+  function open() {
+    if (opened) { finish(); return; } // segundo toque adelanta al final
+    opened = true; store();
+    track("envelope_open");
+    if (reduce) { stage.style.transition = "opacity .3s"; finish(); return; }
+    if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} }
+    stage.classList.add("is-opening");
+    at(560, function () { stage.classList.add("flap-back"); });
+    at(760, function () { stage.classList.add("is-lifting"); });
+    at(1520, function () { stage.classList.add("is-out"); });
+    at(1700, function () { stage.classList.add("sparkle", "ink"); });
+    at(2350, function () { reveal(false); });
+    at(3000, function () { stage.classList.add("is-done"); stage.classList.remove("is-opening","flap-back","is-lifting","is-out"); });
+  }
+
+  env.addEventListener("click", open);
+  stage.addEventListener("click", function (e) { if (opened && e.target !== env) finish(); });
+  $("skip").addEventListener("click", function () { if (!opened) { opened = true; store(); track("envelope_skip"); } finish(); });
+
+  // Si ya lo abrió en esta sesión, no repetir la animación
+  try { if (sessionStorage.getItem(KEY)) { opened = true; stage.className = "stage is-done"; reveal(false); } } catch (e) {}
+
+  /* ---- Entradas al hacer scroll ---- */
+  var io;
+  function observe() {
+    var els = document.querySelectorAll(".rv:not(.in)");
+    if (!("IntersectionObserver" in window)) { els.forEach(function (el) { el.classList.add("in"); }); return; }
+    if (!io) io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      });
+    }, { threshold: .15, rootMargin: "0px 0px -6% 0px" });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  var sawIndex = false;
+  window.addEventListener("scroll", function () {
+    if (sawIndex || !body.classList.contains("revealed")) return;
+    var r = $("incluye").getBoundingClientRect();
+    if (r.top < innerHeight * .5) { sawIndex = true; track("includes_view"); }
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
